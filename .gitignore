@@ -1,0 +1,86 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+*.swp
+nohup.out
+
+# jupyter
+.ipynb_checkpoints/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# MySQL DB
+*.mwb
+*.mwb.*
+*.db
+postgres_data/
+
+# local enviorment folder
+env/
+venv/
+.venv/
+
+# env json && dotenv files
+env.json
+.env
+# local env files
+# do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
+.env
+.env*.local
+.env_bak
+
+# Logs and temporary files
+*.log
+*.sqlite3
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+
+# database
+/prisma/db.sqlite
+/prisma/db.sqlite-journal
+*.mwb
+*.mwb.*
+*.db
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# production
+/build
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# Test and coverage results
+/coverage
+htmlcov/
+.tox/
+.coverage
+coverage.xml
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  django_app:
+    container_name: django_app_docker_test_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - static:/app/static # Ensure static files are shared
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8000/ || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: postgres:17-alpine
+    container_name: django_app_docker_test_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    container_name: caddy_django_app_docker_test_app
+    restart: unless-stopped
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - static:/static
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app-network
+    depends_on:
+      django_app:
+        condition: service_healthy
+
+volumes:
+  static:
+  postgres_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

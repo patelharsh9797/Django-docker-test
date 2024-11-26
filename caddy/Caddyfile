@@ -1,0 +1,12 @@
+:80 {
+    reverse_proxy django_app:8000
+
+    handle_errors {
+        respond "{err.status_code} {err.status_text}"
+    }
+
+    handle_path /static/* {
+        root * /static
+        file_server
+    }
+}
