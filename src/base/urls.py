@@ -1,5 +1,5 @@
 """
-URL configuration for django_test project.
+URL configuration for base project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -14,9 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path
 
+
+def health_check(request):
+    return HttpResponse("OK")
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("", health_check),
+    path("admin/", admin.site.urls),
 ]

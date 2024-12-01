@@ -25,7 +25,7 @@ ENV PATH="/venv/bin:$PATH"
 COPY . .
 
 WORKDIR /app
-COPY ./django_test .
+COPY ./src .
 
 EXPOSE 8000
 

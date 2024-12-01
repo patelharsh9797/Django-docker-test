@@ -2,3 +2,4 @@ Django
 gunicorn
 psycopg2-binary==2.9.9
 python-decouple==3.8
+djangorestframework==3.15.2
