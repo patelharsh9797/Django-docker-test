@@ -16,10 +16,15 @@ Including another URLconf
 """
 
 from django.urls import path
+
 from . import views
 
 urlpatterns = [
     path("advocates/", views.advocate, name="advocate"),
     # path("advocates/<str:username>/", views.advocate_detail, name="advocate_detail"),
-    path("advocates/<str:username>/", views.AdvocateDetail.as_view(), name="advocate_detail"),
+    path(
+        "advocates/<str:username>/",
+        views.AdvocateDetail.as_view(),
+        name="advocate_detail",
+    ),
 ]

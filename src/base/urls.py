@@ -16,10 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import include, path
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 
 @api_view(["GET"])
 def health_check(request):
@@ -29,5 +29,5 @@ def health_check(request):
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", health_check),
-    path("", include('advocate.urls'))
+    path("", include("advocate.urls")),
 ]
