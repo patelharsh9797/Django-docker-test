@@ -27,4 +27,10 @@ urlpatterns = [
         views.AdvocateDetail.as_view(),
         name="advocate_detail",
     ),
+    path("companies/", views.companies_list, name="companies_list"),
+    path(
+        "companies/<str:company_name>/",
+        views.CompanyDetail.as_view(),
+        name="company_detail",
+    ),
 ]

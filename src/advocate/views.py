@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Advocate
-from .serializers import AdvocateSerializer
+from .models import Advocate, Company
+from .serializers import AdvocateSerializer, CompanySerializer
 
 # GET /advocates
 # POST /advocates
@@ -81,3 +81,36 @@ class AdvocateDetail(APIView):
         advocate = self.get_object(username)
         advocate.delete()
         return Response("Advocate deleted")
+
+
+@api_view(["GET"])
+def companies_list(request):
+    componies = Company.objects.all()
+    serializer = CompanySerializer(componies, many=True)
+    return Response(serializer.data)
+
+
+class CompanyDetail(APIView):
+    def get_object(self, company_name):
+        try:
+            return Company.objects.get(name=company_name)
+        except Company.DoesNotExist:
+            raise Response("Company not found!!!")
+
+    def get(self, request, company_name):
+        company = self.get_object(company_name)
+        serializer = CompanySerializer(company, many=False)
+        return Response(serializer.data)
+
+    def put(self, request, company_name):
+        company = self.get_object(company_name)
+        company.username = request.data["username"]
+        company.bio = request.data["bio"]
+        company.save()
+        serializer = CompanySerializer(company, many=False)
+        return Response(serializer.data)
+
+    def delete(self, request, company_name):
+        company = self.get_object(company_name)
+        company.delete()
+        return Response("Company deleted")
